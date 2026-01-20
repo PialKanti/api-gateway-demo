@@ -2,6 +2,7 @@ package com.example.order_service.controller;
 
 import com.example.order_service.service.OrderService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +17,8 @@ public class OrderController {
     }
 
     @GetMapping("/place")
-    public String placeOrder() {
-        String paymentResponse = orderService.processPayment();
+    public String placeOrder(@RequestHeader("X-API-KEY") String apiKey) {
+        String paymentResponse = orderService.processPayment(apiKey);
         return "Order processed. Payment response: " + paymentResponse;
     }
 }
