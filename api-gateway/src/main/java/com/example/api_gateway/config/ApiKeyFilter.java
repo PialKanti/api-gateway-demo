@@ -28,14 +28,14 @@ public class ApiKeyFilter extends AbstractGatewayFilterFactory<ApiKeyFilter.Conf
             String apiKey = exchange.getRequest().getHeaders().getFirst(API_KEY_HEADER);
 
             if (!VALID_API_KEY.equals(apiKey)) {
-                return handleUnauthorized(exchange.getResponse());
+                return writeUnauthorizedResponse(exchange.getResponse());
             }
 
             return chain.filter(exchange);
         };
     }
 
-    private Mono<Void> handleUnauthorized(ServerHttpResponse response) {
+    private Mono<Void> writeUnauthorizedResponse(ServerHttpResponse response) {
         response.setStatusCode(HttpStatus.UNAUTHORIZED);
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
