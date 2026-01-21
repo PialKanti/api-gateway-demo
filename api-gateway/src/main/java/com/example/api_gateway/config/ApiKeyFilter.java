@@ -27,7 +27,7 @@ public class ApiKeyFilter extends AbstractGatewayFilterFactory<ApiKeyFilter.Conf
         return (exchange, chain) -> {
             String apiKey = exchange.getRequest().getHeaders().getFirst(API_KEY_HEADER);
 
-            if (apiKey == null || !VALID_API_KEY.equals(apiKey)) {
+            if (!VALID_API_KEY.equals(apiKey)) {
                 return handleUnauthorized(exchange.getResponse());
             }
 
